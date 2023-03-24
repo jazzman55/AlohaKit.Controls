@@ -142,6 +142,8 @@
             Maximum="10"
             Direction="RightToLeft"
             Value="{Binding Source={x:Reference ValueSlider}, Path=Value}"
+						Animate="False"
+						ValueFormatString="{}{0:d3}&#x0d;&#x0a;km/h"
             HorizontalOptions="Center"
             VerticalOptions="Center"/>
     </Grid>

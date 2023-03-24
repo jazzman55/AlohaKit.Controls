@@ -34,7 +34,7 @@
 
                 var tmpEnd = (int)v * progressStep;
                 ProgressRadialDrawable.ProgressAngle = tmpEnd >= maximumDegree ? 269.99f : tmpEnd;
-                ProgressRadialDrawable.ProgressText = ((int)v).ToString();
+                ProgressRadialDrawable.ProgressText = String.Format(ValueFormatString, (int)v);
                 Invalidate();
 
                 ProgressRadialDrawable.IsAnimating = false;
@@ -173,7 +173,32 @@
             set => SetValue(ValueProperty, value);
         }
 
-        public event EventHandler<ValueChangedEventArgs> ValueChanged;
+        public static readonly BindableProperty AnimateProperty =
+	        BindableProperty.Create(nameof(Animate), typeof(bool), typeof(ProgressRadial), true);
+
+        public bool Animate
+        {
+	        get => (bool)GetValue(AnimateProperty);
+	        set => SetValue(AnimateProperty, value);
+        }
+
+        public static readonly BindableProperty ValueFormatStringProperty =
+	        BindableProperty.Create(nameof(ValueFormatString), typeof(string), typeof(ProgressRadial), "{0}",
+		        propertyChanged: (bindableObject, oldValue, newValue) =>
+		        {
+			        if (newValue != null && bindableObject is ProgressRadial progressRadial)
+			        {
+				        progressRadial.UpdateValue();
+			        }
+		        });
+
+        public string ValueFormatString
+		{
+	        get => (string)GetValue(ValueFormatStringProperty);
+	        set => SetValue(ValueFormatStringProperty, value);
+        }
+
+		public event EventHandler<ValueChangedEventArgs> ValueChanged;
 
         protected override void OnParentChanged()
         {
@@ -259,7 +284,13 @@
             var progressStep = differenceDegree / difference;
 
             ProgressRadialDrawable.ProgressAngle = Value * progressStep;
-            ProgressRadialDrawable.ProgressText = Value.ToString();
+            ProgressRadialDrawable.ProgressText = String.Format(ValueFormatString, Value);
+
+            if (!Animate)
+            {
+				Invalidate();
+	            return;
+            }
 
             if (!ProgressRadialDrawable.IsAnimating && IsInitialized)
                 AnimateProgress(Value);
