@@ -74,9 +74,9 @@
                         <Slider     
                             x:Name="ValueSlider"
                             Grid.Row="1"
-                            Minimum="1"
+                            Minimum="0"
                             Value="5"
-                            Maximum="10"
+                            Maximum="250"
                             Style="{StaticResource SettingsSliderStyle}"/>
                         <Label
                             Grid.Column="1"
@@ -139,7 +139,7 @@
         <controls:ProgressRadial 
             Grid.Row="3"
             x:Name="ProgressRadial"
-            Maximum="10"
+            Maximum="250"
             Direction="RightToLeft"
             Value="{Binding Source={x:Reference ValueSlider}, Path=Value}"
 						Animate="False"
