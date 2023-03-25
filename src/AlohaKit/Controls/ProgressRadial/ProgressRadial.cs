@@ -281,7 +281,7 @@
 
             var difference = Maximum - Minimum;
 
-            var progressStep = differenceDegree / difference;
+            var progressStep = (float)differenceDegree / difference;
 
             ProgressRadialDrawable.ProgressAngle = Value * progressStep;
             ProgressRadialDrawable.ProgressText = String.Format(ValueFormatString, Value);
