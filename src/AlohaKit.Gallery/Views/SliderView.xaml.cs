@@ -100,6 +100,8 @@ public partial class SliderView : ContentPage
                 }
             };
         }
+
+        Slider.ScaleBrush = new SolidColorBrush(Colors.Black);
     }
 
     Color GetColorFromString(string value)

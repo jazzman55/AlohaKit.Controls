@@ -14,6 +14,9 @@ namespace AlohaKit.Controls
 		public Paint ThumbPaint { get; set; }
         public ThumbShape ThumbShape { get; set; }
 
+        public int ScaleSteps { get; set; }
+        public Paint ScalePaint { get; set; }
+
         public void Draw(ICanvas canvas, RectF dirtyRect)
 		{
 			DrawBackground(canvas, dirtyRect);
@@ -31,6 +34,26 @@ namespace AlohaKit.Controls
 				canvas.SetFillPaint(BackgroundPaint, dirtyRect);
 
 				canvas.FillRectangle(dirtyRect);
+			}
+
+			if (ScaleSteps > 0)
+			{
+				canvas.SetFillPaint(ScalePaint, dirtyRect);
+				var width = 2;
+				var height = 20;
+
+				var y = (float)((dirtyRect.Height - height) / 2);
+
+				var d = dirtyRect.Width / (ScaleSteps + 1);
+
+				for (int i = 1; i <= ScaleSteps; i++)
+				{
+					var x = dirtyRect.X + d * i;
+					canvas.FillRoundedRectangle(x, y, width, height, 0);
+				}
+
+
+
 			}
 
 			canvas.RestoreState();

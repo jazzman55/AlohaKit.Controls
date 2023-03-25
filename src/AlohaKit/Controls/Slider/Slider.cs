@@ -144,7 +144,42 @@
             set => SetValue(ThumbShapeProperty, value);
         }
 
-        public event EventHandler<ValueChangedEventArgs> ValueChanged;
+
+
+        public static readonly BindableProperty ScaleStepsProperty =
+	        BindableProperty.Create(nameof(ScaleSteps), typeof(int), typeof(Slider), 0,
+		        propertyChanged: (bindableObject, oldValue, newValue) =>
+		        {
+			        if (newValue != null && bindableObject is Slider slider)
+			        {
+				        slider.UpdateBackground();
+			        }
+		        });
+
+        public int ScaleSteps
+        {
+	        get => (int)GetValue(ScaleStepsProperty);
+	        set => SetValue(ScaleStepsProperty, value);
+        }
+
+        public static readonly BindableProperty ScaleBrushProperty =
+	        BindableProperty.Create(nameof(ScaleBrush), typeof(Brush), typeof(Slider), null,
+		        propertyChanged: (bindableObject, oldValue, newValue) =>
+		        {
+			        if (newValue != null && bindableObject is Slider slider)
+			        {
+				        slider.UpdateBackground();
+			        }
+		        });
+
+        public Brush ScaleBrush
+        {
+	        get => (Brush)GetValue(ScaleBrushProperty);
+	        set => SetValue(ScaleBrushProperty, value);
+        }
+
+
+		public event EventHandler<ValueChangedEventArgs> ValueChanged;
 
         protected override void OnParentSet()
         {
@@ -169,6 +204,8 @@
                 return;
 
             SliderDrawable.BackgroundPaint = Background;
+            SliderDrawable.ScaleSteps = ScaleSteps;
+            SliderDrawable.ScalePaint = ScaleBrush;
 
             Invalidate();
         }
