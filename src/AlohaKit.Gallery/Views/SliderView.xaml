@@ -126,6 +126,6 @@
         </StackLayout>
         <controls:Slider
             Grid.Row="3"
-            x:Name="Slider" Rotation="-90" ScaleSteps="1" />
+            x:Name="Slider" Rotation="-90" ScaleSteps="1" ScaleHeight="20" />
     </Grid>
 </ContentPage>

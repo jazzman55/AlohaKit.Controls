@@ -16,6 +16,7 @@ namespace AlohaKit.Controls
 
         public int ScaleSteps { get; set; }
         public Paint ScalePaint { get; set; }
+        public int ScaleHeight { get; set; }
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
 		{
@@ -40,20 +41,15 @@ namespace AlohaKit.Controls
 			{
 				canvas.SetFillPaint(ScalePaint, dirtyRect);
 				var width = 2;
-				var height = 20;
 
-				var y = (float)((dirtyRect.Height - height) / 2);
+				var y = (dirtyRect.Height - ScaleHeight) / 2;
 
 				var d = dirtyRect.Width / (ScaleSteps + 1);
 
 				for (int i = 1; i <= ScaleSteps; i++)
 				{
-					var x = dirtyRect.X + d * i;
-					canvas.FillRoundedRectangle(x, y, width, height, 0);
+					canvas.FillRoundedRectangle(dirtyRect.X + d * i, y, width, ScaleHeight, 0);
 				}
-
-
-
 			}
 
 			canvas.RestoreState();

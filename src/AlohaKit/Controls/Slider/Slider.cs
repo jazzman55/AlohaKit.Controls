@@ -178,6 +178,22 @@
 	        set => SetValue(ScaleBrushProperty, value);
         }
 
+        public static readonly BindableProperty ScaleHeightProperty =
+	        BindableProperty.Create(nameof(ScaleHeight), typeof(int), typeof(Slider), 10,
+		        propertyChanged: (bindableObject, oldValue, newValue) =>
+		        {
+			        if (newValue != null && bindableObject is Slider slider)
+			        {
+				        slider.UpdateBackground();
+			        }
+		        });
+
+        public int ScaleHeight
+        {
+	        get => (int)GetValue(ScaleHeightProperty);
+	        set => SetValue(ScaleHeightProperty, value);
+        }
+
 
 		public event EventHandler<ValueChangedEventArgs> ValueChanged;
 
@@ -206,6 +222,8 @@
             SliderDrawable.BackgroundPaint = Background;
             SliderDrawable.ScaleSteps = ScaleSteps;
             SliderDrawable.ScalePaint = ScaleBrush;
+            SliderDrawable.ScaleHeight = ScaleHeight;
+
 
             Invalidate();
         }
